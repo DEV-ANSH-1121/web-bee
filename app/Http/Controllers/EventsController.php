@@ -95,8 +95,18 @@ class EventsController extends BaseController
         }
     ]
      */
+    /**
+     * Fetch all events with workshop
+     *
+     * @param
+     * @return  json()
+    */
 
     public function getEventsWithWorkshops() {
+        $events = Event::with('workshops')->get();
+        if($events){
+            return response()->json($events);
+        }
         throw new \Exception('implement in coding task 1');
     }
 
