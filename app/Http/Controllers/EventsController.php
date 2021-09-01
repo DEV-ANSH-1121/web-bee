@@ -184,8 +184,19 @@ class EventsController extends BaseController
     ]
     ```
      */
-
+    /**
+     * Fetch all future events with workshop
+     *
+     * @param
+     * @return  json()
+    */
     public function getFutureEventsWithWorkshops() {
+        $futureEvents = Event::join('workshops','events.id','workshops.event_id')
+                       ->where([['workshops.start','>',now()]])
+                        ->get();
+        if($futureEvents){
+            return response()->json($futureEvents);
+        }
         throw new \Exception('implement in coding task 2');
     }
 }
