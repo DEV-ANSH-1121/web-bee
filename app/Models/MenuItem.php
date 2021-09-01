@@ -8,19 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class MenuItem extends Model
 {
-	/**
-     * Parent menu->Child menu relationship
-     */
-    public function childMenus()
-    {
-        return $this->hasMany(MenuItem::class,'parent_id');
-    }
 
-    /**
-     * Parent menu->Child menu relationship
-     */
-    public function parentMenu()
-    {
-        return $this->belongsTo(MenuItem::class,'parent_id');
-    }
+    // loads only direct children - 1 level
+	public function child()
+	{
+	   return $this->hasMany(MenuItem::class, 'parent_id');
+	}
+
+	// recursive, loads all descendants
+	public function children()
+	{
+	   return $this->child()->with('children');
+	}
+
+	// parent
+	public function parent()
+	{
+	   return $this->belongsTo(MenuItem::class,'parent_id');
+	}
+
+	// all ascendants
+	public function parentRecursive()
+	{
+	   return $this->parent()->with('parentRecursive');
+	}
 }

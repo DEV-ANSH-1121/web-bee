@@ -18,4 +18,9 @@ class Event extends Model
     {
         return $this->hasMany(Workshop::class);
     }
+
+    // results in a "problem", se examples below
+    public function upcomingWorkshops() {
+        return $this->workshops()->whereDate('start','>', now());
+    }
 }

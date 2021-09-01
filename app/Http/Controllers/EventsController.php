@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Workshop;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Date;
+use Carbon\Carbon;
 
 class EventsController extends BaseController
 {
@@ -190,13 +192,31 @@ class EventsController extends BaseController
      * @param
      * @return  json()
     */
-    public function getFutureEventsWithWorkshops() {
-        $futureEvents = Event::join('workshops','events.id','workshops.event_id')
-                       ->where([['workshops.start','>',now()]])
+    public function getFutureEventsWithWorkshops() 
+    {
+        $futureEvents = Event::has('upcomingWorkshops')
+                        ->with(['upcomingWorkshops' => function($query) {
+                            $query->where('start', '>', now());
+                        }])
                         ->get();
         if($futureEvents){
             return response()->json($futureEvents);
         }
         throw new \Exception('implement in coding task 2');
+    }
+
+    /**
+     * Fetch all future events with workshop
+     *
+     * @param
+     * @return  json()
+    */
+    public function getWarmupEvents() 
+    {
+        $events = Event::all();
+        if($events){
+            return response()->json($events);
+        }
+        throw new \Exception('Something went wrong');
     }
 }
