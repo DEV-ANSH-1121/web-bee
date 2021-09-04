@@ -10,12 +10,6 @@ use App\Models\Event;
 
 class Workshop extends Model
 {
-	protected $fillable = [
-        "start",
-        "end",
-        "event_id",
-        "name",
-    ];
 	/**
      * @usage Event->Workshop relationship
      */

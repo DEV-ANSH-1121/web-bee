@@ -12,6 +12,21 @@ use Carbon\Carbon;
 
 class EventsController extends BaseController
 {
+    /**
+     * Fetch all events
+     *
+     * @param
+     * @return  json()
+    */
+    public function index() 
+    {
+        $events = Event::all();
+        if($events){
+            return response()->json($events);
+        }
+        throw new \Exception('Something went wrong');
+    }
+
     /*
      Requirements:
     - maximum 2 sql queries
@@ -205,18 +220,4 @@ class EventsController extends BaseController
         throw new \Exception('implement in coding task 2');
     }
 
-    /**
-     * Fetch all future events with workshop
-     *
-     * @param
-     * @return  json()
-    */
-    public function getWarmupEvents() 
-    {
-        $events = Event::all();
-        if($events){
-            return response()->json($events);
-        }
-        throw new \Exception('Something went wrong');
-    }
 }

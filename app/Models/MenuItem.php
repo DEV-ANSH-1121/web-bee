@@ -20,16 +20,4 @@ class MenuItem extends Model
 	{
 	   return $this->child()->with('children');
 	}
-
-	// parent
-	public function parent()
-	{
-	   return $this->belongsTo(MenuItem::class,'parent_id');
-	}
-
-	// all ascendants
-	public function parentRecursive()
-	{
-	   return $this->parent()->with('parentRecursive');
-	}
 }
