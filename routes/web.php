@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\EventsController;
-use App\Http\Controllers\MenuController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-Route::get('/warmupevents', [EventsController::class, 'index']);
-Route::get('/events', [EventsController::class, 'getEventsWithWorkshops']);
-Route::get('/futureevents', [EventsController::class, 'getFutureEventsWithWorkshops']);
-Route::get('/menu', [MenuController::class, 'getMenuItems']);
+Route::get('/', [TestController::class, 'index']);
+Route::post('/generateOTP', [TestController::class, 'generateOTP']);
